@@ -32,12 +32,13 @@ def convertRatingCop(cust, cop_c, df):
         frequency = df[df['cust'] == cust]['cop_c']
         frequency = frequency.value_counts(normalize=True) * 10
         for i in range(len(frequency)):
-            frequency[i] = random.uniform(frequency[i] - 1, frequency[i] + 0.1)
-        frequency = np.round(frequency, 1)
+            frequency[i] = random.uniform(frequency[i] - 1, frequency[i])
+        frequency = np.round(frequency, 2)
         
         for i, j in zip(frequency.index, frequency.values):
             if cop_c == i:
-                return j
+                res = np.abs(j)
+                return res
                 
     except: ValueError
 
@@ -58,12 +59,12 @@ def convert_rating(cust, clac_hlv_nm, df):
         pd_c = pd_c.groupby('clac_hlv_nm')['buy_ct'].sum().reset_index()
         pd_c = pd_c.sort_values(by='buy_ct', ascending=False, ignore_index=True)
 
-        pd_c['rating'] = (pd_c['buy_ct'] - pd_c['buy_ct'].min()) / (pd_c['buy_ct'].max() - pd_c['buy_ct'].min())
-        pd_c['rating'][0] = random.uniform(0.9, 1.01) 
-        pd_c['rating'] = np.round(pd_c['rating'], 3) * 10
+        pd_c['buy_ct'] = (pd_c['buy_ct'] - pd_c['buy_ct'].min()) / (pd_c['buy_ct'].max() - pd_c['buy_ct'].min())
+        pd_c['buy_ct'][0] = random.uniform(0.9, 1.01) 
+        pd_c['buy_ct'] = np.round(pd_c['buy_ct'], 3) * 10
 
-        res = float(pd_c[pd_c['clac_hlv_nm'] == clac_hlv_nm]['rating'])
-        
+        res = float(pd_c[pd_c['clac_hlv_nm'] == clac_hlv_nm]['buy_ct'])
+   
     except: ValueError
         
     return res
