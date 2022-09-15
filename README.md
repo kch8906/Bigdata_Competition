@@ -4,6 +4,6 @@
 추천시스템을 처음 접하여 많이 부족했던 공모전
 
 # Skill
-Recommandation - GRU4REC(session based)
+Recommandation - GRU4REC(session based) <br>
 유사도 비교 - Faiss
 
